@@ -56,6 +56,7 @@ char* intialize(FILE* in, int sizeOfPattern)
   intial=malloc(sizeof(char)*sizeOfPattern);
   char charc;
   char c[2];
+  c[1]='\0';
   for (i=0; i<sizeOfPattern-1; i++)
   {
     fscanf(in,"%c",&charc);

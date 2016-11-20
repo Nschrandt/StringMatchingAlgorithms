@@ -7,6 +7,7 @@
 //
 
 #include <stdio.h>
+#include <string.h>
 
 char* intialize(FILE* in, int sizeOfPattern);
 
@@ -44,9 +45,13 @@ int readAndUpdate(char* pattern, FILE* in)
   char* tempString;
   char charc;
   int sizeOfPattern;
-  sizeOfPattern = sizeof(pattern)/sizeof(char);
+  printf("%s \n ",pattern);
+  sizeOfPattern = strlen(pattern);
+  printf("%d size is \n",sizeOfPattern);
+
   tempString = intialize(in,sizeOfPattern);
- 
+  
+
   if(matching(pattern,tempString,sizeOfPattern))
   {
     printf("This two strings are matching %s %s",pattern,tempString);
@@ -65,6 +70,7 @@ int readAndUpdate(char* pattern, FILE* in)
       
     }
   }
+
   printf("This sucks\n");
   return 0;
 
@@ -73,27 +79,34 @@ char* intialize(FILE* in, int sizeOfPattern)
 {
   int i;
   char* intial;
-  intial=malloc(sizeof(char)*sizeOfPattern);
+  intial= malloc(sizeof(char)*sizeOfPattern);
   char charc;
   char c[2];
+  c[1]= '\0';
   for (i=0; i<sizeOfPattern-1; i++)
   {
     fscanf(in,"%c",&charc);
+
     c[0] = charc;
+    printf("%s\n",c);
+
     strcat(intial,c);
   }
+//  printf("temp %s", intial);
   return intial;
 }
+
 int matching(char* pattern, char* temp,int sizeOfPattern)
 {
   int i;
-  
+
   for (i=0; i<sizeOfPattern-1; i++) {
     if(pattern[i]!= temp[i])
     {
       return 0;
     }
   }
+ 
   return 1;
 }
 
