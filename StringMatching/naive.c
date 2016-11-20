@@ -18,7 +18,6 @@ int main(int argc, const char * argv[]) {
   char* pattern;
   
   FILE* in;
-  printf("Print\n");
   if(argc != 3)
   {
     printf("wrong number of args\n");
@@ -48,8 +47,6 @@ int readAndUpdate(char* pattern, FILE* in)
   sizeOfPattern = sizeof(pattern)/sizeof(char);
   tempString = intialize(in,sizeOfPattern);
  
-//  printf("%s\n",tempString);
-  printf("%d\n",sizeOfPattern);
   if(matching(pattern,tempString,sizeOfPattern))
   {
     printf("This two strings are matching %s %s",pattern,tempString);
@@ -82,18 +79,15 @@ char* intialize(FILE* in, int sizeOfPattern)
   for (i=0; i<sizeOfPattern-1; i++)
   {
     fscanf(in,"%c",&charc);
-//    printf("%c\n",charc);
     c[0] = charc;
     strcat(intial,c);
   }
-  printf("This is intial %s", intial);
   return intial;
 }
 int matching(char* pattern, char* temp,int sizeOfPattern)
 {
   int i;
   
-//  printf("This is temp %s This is pattern %s\n",temp,pattern);
   for (i=0; i<sizeOfPattern-1; i++) {
     if(pattern[i]!= temp[i])
     {

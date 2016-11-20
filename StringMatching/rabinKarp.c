@@ -26,7 +26,6 @@ int main(int argc, const char * argv[]) {
   int alphabet;
   
   FILE* in;
-  printf("Rabin Karp\n");
   if(argc != 4)
   {
     printf("wrong number of args\n");
@@ -48,7 +47,6 @@ int main(int argc, const char * argv[]) {
     h = (h* alphabet)%prime;
   }
   readAndUpdate(pattern,in);
-  printf("Stuck here\n");
   return 0;
 }
 char* intialize(FILE* in, int sizeOfPattern)
@@ -64,7 +62,6 @@ char* intialize(FILE* in, int sizeOfPattern)
     c[0] = charc;
     strcat(intial,c);
   }
-  printf("This is intial %s", intial);
   return intial;
 }
 
@@ -81,8 +78,6 @@ int readAndUpdate(char* pattern, FILE* in, int alpha)
   sizeOfPattern = sizeof(pattern)/sizeof(char);
   tempString = intialize(in,sizeOfPattern);
   
-  //  printf("%s\n",tempString);
-  printf("%d\n",sizeOfPattern);
  
   hashPattern = patternHash(pattern, alphabet);
   hashTemp = patternHash(tempString, alphabet);
@@ -124,7 +119,6 @@ long patternHash(char* pattern, int alphabetSize)
   {
     patternHash = (alphabetSize*patternHash+pattern[i])%prime;
   }
-  printf("%s has a hash of %lu ",pattern, patternHash);
   return patternHash;
 }
 long update(char letter, char minus, int alphabet, long hash)
