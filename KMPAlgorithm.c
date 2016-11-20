@@ -17,11 +17,31 @@
 
 int main(int argc, const char *argv[])
 {
+  char* infile;
+  char* outfile;
+  char* pattern;
+  int patternlength;
+  int i;
+  int alphabet;
   int success;
-  char text[] = "aaaaaabbbbc";
-  char pattern[] = "aaaabbbbc";
+  FILE* in;
 
- success = stringMatch(text, strlen(text), pattern, strlen(pattern));
+  printf("KMP Algorithm\n");
+  if(argc != 3)
+  {
+    printf("Wrong number of arguments.\n");
+    return 1;
+  }
+  pattern = argv[1];
+  infile = argv[2];
+  in = fopen(infile, "rb");
+  if(in == NULL)
+  {
+    printf("Couldn't open %s for reading\n", infile);
+    return 2;
+  }
+  patternlength = strlen(pattern);
+  success = stringMatch(in, pattern, strlen(pattern));
 }
 
 int *makeFailureTable(char *pattern, int psize)
@@ -45,15 +65,16 @@ int *makeFailureTable(char *pattern, int psize)
   return failureTable;
 }
 
-int stringMatch(char *text, int textSize, char *pattern, int patternSize)
+int stringMatch(FILE* in, char *pattern, int patternSize)
 {
   int i = 0;
   int j = 0;
+  int counter = 0;
+  char charc;
   int *failureTable = makeFailureTable(pattern, patternSize);
-  
-  while(i < textSize)
+  while((fscanf(in, "%c", &charc ))!= EOF)
   {
-    while(j >= 0 && text[i] != pattern[j])
+    while(j >= 0 && charc != pattern[j])
     {
       j = failureTable[j];
     }
@@ -61,10 +82,10 @@ int stringMatch(char *text, int textSize, char *pattern, int patternSize)
     j++;
     if(j == patternSize)
     {
-      printf("Found match at %d\n", (i - patternSize));
+      printf("Found match.\n");
+      return 1;
     }
   }
-
   free(failureTable);
-  return 1;
+  return 0;
 }
