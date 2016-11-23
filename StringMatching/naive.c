@@ -79,7 +79,7 @@ char* intialize(FILE* in, int sizeOfPattern)
 {
   int i;
   char* intial;
-  intial= malloc(sizeof(char)*sizeOfPattern);
+  intial= malloc(sizeof(char*));
   char charc;
   char c[2];
   c[1]= '\0';

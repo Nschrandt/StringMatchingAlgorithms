@@ -40,20 +40,20 @@ int main(int argc, const char * argv[]) {
     printf("couldn't open %s for reading\n", infile);
     return 2;
   }
-  prime = 4957;
+  prime = 15485863;
   patternlength = strlen(pattern);
   for (i = 0; i < patternlength; i++)
   {
     h = (h* alphabet)%prime;
   }
-  readAndUpdate(pattern,in);
+  readAndUpdate(pattern,in,alphabet);
   return 0;
 }
 char* intialize(FILE* in, int sizeOfPattern)
 {
   int i;
   char* intial;
-  intial=malloc(sizeof(char)*sizeOfPattern);
+  intial=malloc(sizeof(char*));
   char charc;
   char c[2];
   c[1]='\0';
@@ -76,8 +76,9 @@ int readAndUpdate(char* pattern, FILE* in, int alpha)
   long hashTemp;
   int alphabet;
   alphabet = alpha;
-  sizeOfPattern = sizeof(pattern)/sizeof(char);
-  tempString = intialize(in,sizeOfPattern);
+  sizeOfPattern = strlen(pattern);
+  
+  tempString= intialize(in,sizeOfPattern);
   
  
   hashPattern = patternHash(pattern, alphabet);
@@ -98,7 +99,7 @@ int readAndUpdate(char* pattern, FILE* in, int alpha)
     if(hashTemp == hashPattern)
     {
       printf("Match\n");
-      printf("hashPattern %lu hashTemp %lu \n",hashPattern,hashTemp);
+      printf("hashPattern %s %lu hashTemp %s %lu \n",pattern,hashPattern,tempString,hashTemp);
       return 1;
       
     }
@@ -124,6 +125,6 @@ long patternHash(char* pattern, int alphabetSize)
 }
 long update(char letter, char minus, int alphabet, long hash)
 {
-  hash = (alphabet*(hash-minus*h)+letter)%prime;
+  hash = (alphabet*(hash-(minus*h))+letter)%prime;
   return hash;
 }
