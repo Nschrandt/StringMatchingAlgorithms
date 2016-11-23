@@ -9,7 +9,6 @@
 #include "rabinKarp.h"
 #include <stdio.h>
 #include <string.h>
-#include <stdlib.h>
 
 long h;
 int prime;
@@ -41,15 +40,13 @@ int main(int argc, const char * argv[]) {
     printf("couldn't open %s for reading\n", infile);
     return 2;
   }
-  printf("Alphabet %d\n",alphabet);
-  prime = 15485863;
+  prime = 4957;
   patternlength = strlen(pattern);
   for (i = 0; i < patternlength; i++)
   {
-    h = (h*alphabet)%prime;
-    
+    h = (h* alphabet)%prime;
   }
-  readAndUpdate(pattern,in,alphabet);
+  readAndUpdate(pattern,in);
   return 0;
 }
 char* intialize(FILE* in, int sizeOfPattern)
@@ -66,7 +63,6 @@ char* intialize(FILE* in, int sizeOfPattern)
     c[0] = charc;
     strcat(intial,c);
   }
-  printf("Intial works");
   return intial;
 }
 
@@ -80,17 +76,16 @@ int readAndUpdate(char* pattern, FILE* in, int alpha)
   long hashTemp;
   int alphabet;
   alphabet = alpha;
-  sizeOfPattern = strlen(pattern);
+  sizeOfPattern = sizeof(pattern)/sizeof(char);
   tempString = intialize(in,sizeOfPattern);
   
-  printf("alphabet %d",alpha);
+ 
   hashPattern = patternHash(pattern, alphabet);
   hashTemp = patternHash(tempString, alphabet);
   
   if (hashPattern == hashTemp)
   {
     printf("hashPattern %lu hashTemp %lu \n",hashPattern,hashTemp);
-    printf("Pattern %s, Temp %s",pattern,tempString);
     return 1;
   }
   while((fscanf(in,"%c",&charc))!= EOF)
@@ -98,17 +93,15 @@ int readAndUpdate(char* pattern, FILE* in, int alpha)
     tem[0] = charc;
     strcat(tempString,tem);
     hashTemp = update(tem[0],tempString[0], alphabet, hashTemp);
+    tempString = tempString+1;
 
     if(hashTemp == hashPattern)
     {
       printf("Match\n");
       printf("hashPattern %lu hashTemp %lu \n",hashPattern,hashTemp);
-      printf("Pattern %s, Temp %s\n",pattern,tempString);
       return 1;
       
     }
-    tempString = tempString+1;
-
 
   }
   
@@ -123,18 +116,14 @@ long patternHash(char* pattern, int alphabetSize)
   long patternHash;
   patternHash = 0;
   length = strlen(pattern);
-  for(i = 1; i<length; i++)
+  for(i = 0; i<length; i++)
   {
-//    printf("pattern[i] %c, int value %d",pattern[i],pattern[i]);
-//    printf("Alphabet Size = %d, PatternHash = %lu, pattern[i] = %d\n",alphabetSize,patternHash,pattern[i] );
-    patternHash = (alphabetSize*patternHash+(int)pattern[i])%prime;
-
+    patternHash = (alphabetSize*patternHash+pattern[i])%prime;
   }
-  printf("PatternHash is intialized");
   return patternHash;
 }
 long update(char letter, char minus, int alphabet, long hash)
 {
-  hash = (alphabet*(hash-(minus*h))+(int)letter)%prime;
+  hash = (alphabet*(hash-minus*h)+letter)%prime;
   return hash;
 }
