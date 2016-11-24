@@ -82,10 +82,11 @@ int stringMatch(FILE* in, char *pattern, int patternSize)
     j++;
     if(j == patternSize)
     {
-      printf("Found match.\n");
-      return 1;
+      printf("Found match at %d\n", i);
+      counter++;
     }
   }
+  printf("%d matches were found.\n", counter);
   free(failureTable);
   return 0;
 }
