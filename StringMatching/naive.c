@@ -10,6 +10,8 @@
 #include <string.h>
 
 char* intialize(FILE* in, int sizeOfPattern);
+char* intial(FILE* in);
+
 
 int main(int argc, const char * argv[]) {
   // insert code here...
@@ -17,6 +19,7 @@ int main(int argc, const char * argv[]) {
   char* infile;
   char* outfile;
   char* pattern;
+  int matches;
   
   FILE* in;
   if(argc != 3)
@@ -35,44 +38,71 @@ int main(int argc, const char * argv[]) {
   }
   
  
-  readAndUpdate(pattern,in);
+  matches = readAndUpdate(pattern,in);
+  if(matches == 0)
+  {
+    printf("Sorry no matches were found\n");
+  }
+  else
+  {
+    printf("There were %d matches\n",matches);
+  }
   
-    return 0;
+  
+  return 0;
 }
+
 int readAndUpdate(char* pattern, FILE* in)
 {
   char tem[2];
   char* tempString;
   char charc;
   int sizeOfPattern;
+  int i;
+  int j;
+  int matches = 0;
+  int letterMatches =0;
   printf("%s \n ",pattern);
   sizeOfPattern = strlen(pattern);
   printf("%d size is \n",sizeOfPattern);
-
-  tempString = intialize(in,sizeOfPattern);
   
+  tempString = intial(in);
+  
+  printf("hello\n");
 
-  if(matching(pattern,tempString,sizeOfPattern))
+ 
+
+  for(i=0;i<=strlen(tempString)-sizeOfPattern;i++)
   {
-    printf("This two strings are matching %s %s",pattern,tempString);
-    return 1;
-    
-  }
-  while((fscanf(in,"%c",&charc))!= EOF)
-  {
-    tem[0] = charc;
-    strcat(tempString,tem);
-    tempString = tempString+1;
-    if(matching(pattern,tempString,sizeOfPattern))
+    for(j=0;j<sizeOfPattern;j++)
     {
-      printf("This two strings are matching %s %s \n",pattern,tempString);
-      return 1;
+      if(pattern[j] != tempString[i+j])
+      {
+        break;
+      }
+      else
+      {
+        letterMatches++;
+      }
       
     }
+    if (letterMatches == sizeOfPattern) {
+//      printf("%c,%c",tempString[i],tempString[i+j]);
+      matches++;
+    }
+    letterMatches =0;
+    
+  
+//    if(matching(pattern,strcpy(tempString+i,sizeOfPattern),sizeOfPattern))
+//    {
+//      printf("This two strings are matching %s %s \n",pattern,tempString);
+//      matches ++;
+//      
+//    }
   }
 
   printf("This sucks\n");
-  return 0;
+  return matches;
 
 }
 char* intialize(FILE* in, int sizeOfPattern)
@@ -108,5 +138,17 @@ int matching(char* pattern, char* temp,int sizeOfPattern)
   }
  
   return 1;
+}
+char* intial(FILE* in)
+{
+  long len;
+  char* file;
+  fseek(in, 0, SEEK_END);
+  len = ftell(in);
+  rewind(in);
+  file = calloc(1,len+1);
+  fread(file,len,1,in);
+//  printf("%s\n",file);
+  return file;
 }
 

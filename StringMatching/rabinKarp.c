@@ -24,6 +24,7 @@ int main(int argc, const char * argv[]) {
   int patternlength;
   int i;
   int alphabet;
+  int matches;
   
   FILE* in;
   if(argc != 4)
@@ -41,21 +42,32 @@ int main(int argc, const char * argv[]) {
     return 2;
   }
   prime = 4957;
+  h = 1;
   patternlength = strlen(pattern);
-//  for (i = 0; i < patternlength-1; i++)
-//  {
-//    h = (h* alphabet)%prime;
-//  }
-  h=(int)pow(alphabet, patternlength-1)%prime;
+  for (i = 1; i < patternlength; i++)
+  {
+    h = (h * alphabet)%15485863;
+  }
+//  h=(int)pow(alphabet, patternlength-1)%prime;
 
-  readAndUpdate(pattern,in,alphabet,h);
+ matches = readAndUpdate(pattern,in,alphabet,h);
+  if(matches == 0)
+  {
+    printf("Sorry no matches were found\n");
+  }
+  else
+  {
+    printf("There were %d matches\n",matches);
+  }
+  
+  
   return 0;
 }
 char* intialize(FILE* in, int sizeOfPattern)
 {
   int i;
   char* intial;
-  intial=malloc(sizeof(char*));
+  intial=(char*)malloc(sizeof(10200));
   char charc;
   char c[2];
   c[1]='\0';
@@ -77,10 +89,14 @@ int readAndUpdate(char* pattern, FILE* in, int alpha, long h)
   long hashPattern;
   long hashTemp;
   int alphabet;
+  int numberOfMatches = 0;
+  int passes = 0;
+
+  tempString = malloc(sizeof(char*));
   alphabet = alpha;
   sizeOfPattern = strlen(pattern);
   
-  tempString= intialize(in,sizeOfPattern);
+ tempString = intialize(in,sizeOfPattern);
   
  
   hashPattern = patternHash(pattern, alphabet);
@@ -95,22 +111,26 @@ int readAndUpdate(char* pattern, FILE* in, int alpha, long h)
   while((fscanf(in,"%c",&charc))!= EOF)
   {
     tem[0] = charc;
-    strcat(tempString,tem);
-    hashTemp = update(tem[0],tempString[0], alphabet, hashTemp,h);
-    tempString = tempString+1;
+//    strcat(tempString,tem);
+    hashTemp = update(tem[0],tempString[passes%sizeOfPattern], alphabet, hashTemp,h);
+    tempString[passes%sizeOfPattern] = tem[0];
+//    tempString = tempString+1;
+    
 //    printf("hashPattern %s %lu hashTemp %s %lu \n",pattern,hashPattern,tempString,hashTemp);
     if(hashTemp == hashPattern)
     {
-      printf("Match\n");
+//      printf("Match\n");
       printf("hashPattern %s %lu hashTemp %s %lu \n",pattern,hashPattern,tempString,hashTemp);
-      return 1;
-      
+      numberOfMatches++;
+
     }
+    passes++;
+
 
   }
-  
-  printf("This sucks\n");
-  return 0;
+//  tempString = tempString -3;
+  free(tempString);
+  return numberOfMatches;
   
 }
 long patternHash(char* pattern, int alphabetSize)
