@@ -25,24 +25,22 @@ naiveText3: naive.c
 	time ./naive "Whales in the sea God's voice obey." MobyDick.txt
 
 rabinKarpText1: rabinKarp.c
-	time ./naive "Moby Dick" MobyDick.txt 255
+	time ./rabinKarp "Moby Dick" MobyDick.txt 255
 
 rabinKarpText2: rabinKarp.c
-	time ./naive "the" MobyDick.txt 255
+	time ./rabinKarp "the" MobyDick.txt 255
 
 rabinKarpText3: rabinKarp.c
-	time ./naive "Whales in the sea God's voice obey." MobyDick.txt 255
+	time ./rabinKarp "Whales in the sea God's voice obey." MobyDick.txt 255
 
 KMPText1: KMPAlgorithm.c
-	time ./naive "Moby Dick" MobyDick.txt
+	time ./KMPAlgorithm "Moby Dick" MobyDick.txt
 
 KMPText2: KMPAlgorithm.c
-	time ./naive "the" MobyDick.txt
+	time ./KMPAlgorithm "the" MobyDick.txt
 
 KMPText3: KMPAlgorithm.c
-	time ./naive "Whales in the sea God's voice obey." MobyDick.txt
-
-
+	time ./KMPAlgorithm "Whales in the sea God's voice obey." MobyDick.txt
 
 naiveDNA1: naive.c
 	time ./naive "TGATT" bacteria.txt
@@ -81,5 +79,29 @@ rabinKarpRussian: rabinKarp.c
 naiveRussian: naive.c
 	time ./naive "шести" CrimeAndPunishment.txt
 
+naiveIll1: naive.c
+	time ./naive "the" Illiad.txt
 
+naiveIll2: naive.c
+	time ./naive "Odysseus" Illiad.txt
 
+naiveIll3: naive.c
+	time ./naive "Hector" Illiad.txt
+
+rabinKarpIll1: rabinKarp.c
+	time ./rabinKarp "the" Illiad.txt 255
+
+rabinKarpIll2: rabinKarp.c
+	time ./rabinKarp "Odysseus" Illiad.txt 255
+
+rabinKarpIll3: rabinKarp.c
+	time ./rabinKarp "Hector" Illiad.txt 255
+
+KMPIll1: rabinKarp.c
+	time ./KMPAlgorithm "the" Illiad.txt 255
+
+KMPIll2: rabinKarp.c
+	time ./KMPAlgorithm "Odysseus" Illiad.txt 255
+
+KMPIll3: rabinKarp.c
+	time ./KMPAlgorithm "Hector" Illiad.txt
