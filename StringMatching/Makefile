@@ -98,10 +98,10 @@ rabinKarpIll3: rabinKarp.c
 	time ./rabinKarp "Hector" Illiad.txt 255
 
 KMPIll1: rabinKarp.c
-	time ./KMPAlgorithm "the" Illiad.txt 255
+	time ./KMPAlgorithm "the" Illiad.txt
 
 KMPIll2: rabinKarp.c
-	time ./KMPAlgorithm "Odysseus" Illiad.txt 255
+	time ./KMPAlgorithm "Odysseus" Illiad.txt
 
 KMPIll3: rabinKarp.c
 	time ./KMPAlgorithm "Hector" Illiad.txt
