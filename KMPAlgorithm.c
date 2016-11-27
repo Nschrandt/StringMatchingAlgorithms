@@ -44,6 +44,19 @@ int main(int argc, const char *argv[])
   success = stringMatch(in, pattern, strlen(pattern));
 }
 
+char* intial(FILE* in)
+{
+  long len;
+  char* file;
+  fseek(in, 0, SEEK_END);
+  len = ftell(in);
+  rewind(in);
+  file = calloc(1,len+1);
+  fread(file,len,1,in);
+  //  printf("%s\n",file);
+  return file;
+}
+
 int *makeFailureTable(char *pattern, int psize)
 {
   int *failureTable = malloc(sizeof(int)*psize);
@@ -70,15 +83,18 @@ int stringMatch(FILE* in, char *pattern, int patternSize)
   int i = 0;
   int j = 0;
   int counter = 0;
+  char * textFile;
+  long fileLength;
   char charc;
   int *failureTable = makeFailureTable(pattern, patternSize);
-  while((fscanf(in, "%c", &charc ))!= EOF)
+  textFile = intial(in);
+  fileLength = strlen(textFile);
+  for(i = 0; i <fileLength; i++)
   {
-    while(j >= 0 && charc != pattern[j])
+    while(j >= 0 && textFile[i]  != pattern[j])
     {
       j = failureTable[j];
     }
-    i++;
     j++;
     if(j == patternSize)
     {
