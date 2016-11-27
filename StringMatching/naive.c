@@ -62,13 +62,13 @@ int readAndUpdate(char* pattern, FILE* in)
   int j;
   int matches = 0;
   int letterMatches =0;
-  printf("%s \n ",pattern);
+//  printf("%s \n ",pattern);
   sizeOfPattern = strlen(pattern);
-  printf("%d size is \n",sizeOfPattern);
+//  printf("%d size is \n",sizeOfPattern);
   
   tempString = intial(in);
   
-  printf("hello\n");
+//  printf("hello\n");
 
  
 
@@ -86,7 +86,8 @@ int readAndUpdate(char* pattern, FILE* in)
       }
       
     }
-    if (letterMatches == sizeOfPattern) {
+    if (letterMatches == sizeOfPattern)
+    {
 //      printf("%c,%c",tempString[i],tempString[i+j]);
       matches++;
     }
@@ -101,30 +102,30 @@ int readAndUpdate(char* pattern, FILE* in)
 //    }
   }
 
-  printf("This sucks\n");
+//  printf("This sucks\n");
   return matches;
 
 }
-char* intialize(FILE* in, int sizeOfPattern)
-{
-  int i;
-  char* intial;
-  intial= malloc(sizeof(char*));
-  char charc;
-  char c[2];
-  c[1]= '\0';
-  for (i=0; i<sizeOfPattern-1; i++)
-  {
-    fscanf(in,"%c",&charc);
-
-    c[0] = charc;
-    printf("%s\n",c);
-
-    strcat(intial,c);
-  }
-//  printf("temp %s", intial);
-  return intial;
-}
+//char* intialize(FILE* in, int sizeOfPattern)
+//{
+//  int i;
+//  char* intial;
+//  intial= malloc(sizeof(char*));
+//  char charc;
+//  char c[2];
+//  c[1]= '\0';
+//  for (i=0; i<sizeOfPattern-1; i++)
+//  {
+//    fscanf(in,"%c",&charc);
+//
+//    c[0] = charc;
+//    printf("%s\n",c);
+//
+//    strcat(intial,c);
+//  }
+////  printf("temp %s", intial);
+//  return intial;
+//}
 
 int matching(char* pattern, char* temp,int sizeOfPattern)
 {

@@ -228,8 +228,8 @@ int reader(char* pattern, FILE* in, int alphabet, long h)
     patternHash =((alphabet * patternHash)+pattern[i]) %prime;
     tempHash = ((alphabet * tempHash)+tempString[i]) %prime;
   }
-  printf("Pattern Hash is %ld\n", patternHash);
-  printf("Temp Hash is %ld\n", tempHash);
+//  printf("Pattern Hash is %ld\n", patternHash);
+//  printf("Temp Hash is %ld\n", tempHash);
   for(j = 0; j< tempLength; j++)
   {
     
