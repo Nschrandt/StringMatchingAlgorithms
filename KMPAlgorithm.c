@@ -98,7 +98,6 @@ int stringMatch(FILE* in, char *pattern, int patternSize)
     j++;
     if(j == patternSize)
     {
-      printf("Found match at %d\n", i);
       counter++;
     }
   }
