@@ -1,24 +1,18 @@
-//
-//  main.c
-//  StringMatching
-//
-//  Created by Family on 11/10/16.
-//  Copyright © 2016 Family. All rights reserved.
-//
+
 
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
-char* intialize(FILE* in, int sizeOfPattern);
 char* intial(FILE* in);
+int readAndUpdate(const char* pattern, FILE* in);
+
 
 
 int main(int argc, const char * argv[]) {
-  // insert code here...
 
-  char* infile;
-  char* outfile;
-  char* pattern;
+ const char* infile;
+ const char* pattern;
   int matches;
   
   FILE* in;
@@ -47,99 +41,48 @@ int main(int argc, const char * argv[]) {
   {
     printf("There were %d matches\n",matches);
   }
-  
-  
   return 0;
 }
-
-int readAndUpdate(char* pattern, FILE* in)
+/*
+ Read and update is a method that takes in a char * and file*
+ It first calls intial on the file* it then takes the returned char* and looks for 
+ matches of the pattern in it.
+ */
+int readAndUpdate(const char* pattern, FILE* in)
 {
-  char tem[2];
   char* tempString;
-  char charc;
   int sizeOfPattern;
   int i;
   int j;
   int matches = 0;
   int letterMatches =0;
-//  printf("%s \n ",pattern);
+  int sizeOfTemp;
   sizeOfPattern = strlen(pattern);
-//  printf("%d size is \n",sizeOfPattern);
   
   tempString = intial(in);
-  
-//  printf("hello\n");
+  sizeOfTemp = strlen(tempString);
 
- 
-
-  for(i=0;i<=strlen(tempString)-sizeOfPattern;i++)
+  for(i=0;i<=sizeOfTemp-sizeOfPattern;i++)
   {
     for(j=0;j<sizeOfPattern;j++)
     {
-      if(pattern[j] != tempString[i+j])
-      {
-        break;
-      }
-      else
-      {
-        letterMatches++;
-      }
+      if(pattern[j] != tempString[i+j]) break;
       
     }
-    if (letterMatches == sizeOfPattern)
+    if (j == sizeOfPattern)
     {
-//      printf("%c,%c",tempString[i],tempString[i+j]);
       matches++;
     }
     letterMatches =0;
-    
-  
-//    if(matching(pattern,strcpy(tempString+i,sizeOfPattern),sizeOfPattern))
-//    {
-//      printf("This two strings are matching %s %s \n",pattern,tempString);
-//      matches ++;
-//      
-//    }
   }
-
-//  printf("This sucks\n");
+  free(tempString);
   return matches;
-
 }
-//char* intialize(FILE* in, int sizeOfPattern)
-//{
-//  int i;
-//  char* intial;
-//  intial= malloc(sizeof(char*));
-//  char charc;
-//  char c[2];
-//  c[1]= '\0';
-//  for (i=0; i<sizeOfPattern-1; i++)
-//  {
-//    fscanf(in,"%c",&charc);
-//
-//    c[0] = charc;
-//    printf("%s\n",c);
-//
-//    strcat(intial,c);
-//  }
-////  printf("temp %s", intial);
-//  return intial;
-//}
-
-int matching(char* pattern, char* temp,int sizeOfPattern)
-{
-  int i;
-
-  for (i=0; i<sizeOfPattern-1; i++) {
-    if(pattern[i]!= temp[i])
-    {
-      return 0;
-    }
-  }
- 
-  return 1;
-}
+/*
+ Intial is a method that takes a file as a paramater.
+ With that file it checks the size and allocs memory for a char* of that size
+ It then reads the file into that char *
+ */
 char* intial(FILE* in)
 {
   long len;
@@ -149,7 +92,6 @@ char* intial(FILE* in)
   rewind(in);
   file = calloc(1,len+1);
   fread(file,len,1,in);
-//  printf("%s\n",file);
   return file;
 }
 
