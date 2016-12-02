@@ -1,3 +1,4 @@
+SHELL := /bin/bash
 clean:
 	rm rabinKarp naive KMPAlgorithm
 
